@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "531251469913",
+    "firebase_url": "https://mrbills-45080.firebaseio.com",
+    "project_id": "mrbills-45080",
+    "storage_bucket": "mrbills-45080.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:531251469913:android:fcf68f634da79cec",
+        "android_client_info": {
+          "package_name": "com.example.mrbills"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "531251469913-s05oq35cbgesgsjmjjfie75l159qpqn5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAE8UQfqi2f21pwKAfa2JmExt7bGeZ69Gg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "531251469913-s05oq35cbgesgsjmjjfie75l159qpqn5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
