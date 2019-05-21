@@ -2,6 +2,7 @@ package com.example.mrbills;
 
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -21,7 +22,7 @@ public class Tea extends AppCompatActivity {
 
     private static final int SEND_SMS_PERMISSION_REQ = 1;
     TextView amount,remarks,name,mobile_number;
-    Button plus,minus,order;
+    Button plus,minus,order,back;
     CheckBox biscuit,special;
     int bill = 0,num=0;
     Database myDB;
@@ -41,6 +42,7 @@ public class Tea extends AppCompatActivity {
         biscuit = (CheckBox) findViewById(R.id.biscuits);
         special = (CheckBox) findViewById(R.id.special);
         myDB = new Database(this);
+        back = (Button) findViewById(R.id.back);
         if(checkPermission(Manifest.permission.SEND_SMS)) {
             order.setEnabled(true);
         }
@@ -66,6 +68,13 @@ public class Tea extends AppCompatActivity {
 
                 }
 
+            }
+        });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(Tea.this,MainActivity.class);
+                startActivity(in);
             }
         });
         order.setOnClickListener(new View.OnClickListener() {

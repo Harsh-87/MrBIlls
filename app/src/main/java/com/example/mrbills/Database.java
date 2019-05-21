@@ -35,7 +35,7 @@ public class Database extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-        item1 = item1 + "        "+ item2 +"       "+ date +"       "+item3 ;
+        item1 = item1 + "\n"+ item2 +"   "+ date +"   "+item3 ;
         contentValues.put(col2,item1);
         long result = db.insert(table_name,null,contentValues);
         if(result == -1){
