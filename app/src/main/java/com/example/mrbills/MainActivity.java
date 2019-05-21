@@ -1,6 +1,7 @@
 package com.example.mrbills;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -28,9 +29,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    ListView list;
-    ArrayList<String> array = new ArrayList<>();
-
+    ListView list1;
+    ArrayList<String> array1 = new ArrayList<>();
+    Database myDB;
     Firebase mref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +45,18 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_list_item_1,array);
-        list = (ListView) findViewById(R.id.list);
-        list.setAdapter(adapter);
+        list1 = (ListView) findViewById(R.id.list1);
+        myDB = new Database(this);
+        Cursor data = myDB.getListContents();
+        if(data.getCount()==0){
+            Toast.makeText(MainActivity.this,"Empty History",Toast.LENGTH_SHORT).show();
+        }else{
+            while(data.moveToNext()){
+                array1.add(data.getString(data.getColumnIndex("ITEM1")));
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_list_item_1,array1);
+            list1.setAdapter(adapter);
+        }
 
 //        mref =new Firebase("https://mrbills-45080.firebaseio.com/name");
 //        mref.addValueEventListener(new ValueEventListener() {

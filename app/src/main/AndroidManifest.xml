@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Tea"></activity>
-        <activity android:name=".Coffee" />
+        <activity android:name=".Coffee"></activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

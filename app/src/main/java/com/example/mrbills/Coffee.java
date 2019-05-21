@@ -23,6 +23,7 @@ public class Coffee extends AppCompatActivity {
     Button plus,minus,order;
     CheckBox whippedcream,chocolate;
     int bill = 0,num=0;
+    Database myDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class Coffee extends AppCompatActivity {
         mobile_number = (TextView) findViewById(R.id.mobile_number);
         whippedcream = (CheckBox) findViewById(R.id.whippedcream);
         chocolate = (CheckBox) findViewById(R.id.chocolate);
+        myDB = new Database(this);
         if(checkPermission(Manifest.permission.SEND_SMS)) {
             order.setEnabled(true);
         }
@@ -71,7 +73,6 @@ public class Coffee extends AppCompatActivity {
                 if (bill > 0)
                 {
                     remarks.setText(orderSummary());
-
                     if(!TextUtils.isEmpty(name.getText().toString())&&!TextUtils.isEmpty(mobile_number.getText().toString()))
                     {
 
@@ -80,6 +81,11 @@ public class Coffee extends AppCompatActivity {
                             Toast.makeText(Coffee.this,"Message sent",Toast.LENGTH_SHORT).show();
                             SmsManager smsManager=SmsManager.getDefault();
                             smsManager.sendTextMessage(mobile_number.getText().toString(),null,remarks.getText().toString(),null,null);
+                            String a = "Rs."+String.valueOf(bill);
+                            boolean insert = myDB.addData(name.getText().toString(),a,mobile_number.getText().toString());
+                            if(!insert){
+                                Toast.makeText(Coffee.this, "Not added to database", Toast.LENGTH_SHORT).show();
+                            }
                         }
                         else {
                             Toast.makeText(Coffee.this, "Permission Denied", Toast.LENGTH_SHORT).show();
@@ -87,7 +93,7 @@ public class Coffee extends AppCompatActivity {
                     }
                     else
                     {
-                        Toast.makeText(Coffee.this, "Textfields are empty!! Fill them.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Coffee.this, "fields are empty!! Fill them.", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -97,17 +103,22 @@ public class Coffee extends AppCompatActivity {
     public String orderSummary(){
 
         String quantity = "Quantity : "+num;
-        if(whippedcream.isChecked() &&  chocolate.isChecked())
-            return  "Order Details\n"+"Name : "+name.getText().toString()+"\nMobile Number : "+mobile_number.getText().toString()+"\nWhipped Cream is also added !!"+"\nChocolate is also added !!\n"+quantity+"\nTotal bill : Rs "+(bill+20*num)+"\nThank You !!";
-
-        else if ( chocolate.isChecked())
-            return  "Order Details\n"+"Name : "+name.getText().toString()+"\nMobile Number : "+mobile_number.getText().toString()+"\nChocolate is also added !!\n"+quantity+"\nTotal bill : Rs "+(bill+10*num)+"\nThank You !!";
-
-        else if (whippedcream.isChecked())
-            return  "Order Details\n"+"Name : "+name.getText().toString()+"\nMobile Number : "+mobile_number.getText().toString()+"\nWhipped Cream is also added !!\n"+quantity+"\nTotal bill : Rs "+(bill+10*num)+"\nThank You !!";
-
-        else
-            return  "Order Details\n"+"Name : "+name.getText().toString()+"\nMobile Number : "+mobile_number.getText().toString()+"\n"+quantity+"\nTotal bill : Rs "+bill+"\nThank You !!";
+        if(whippedcream.isChecked() &&  chocolate.isChecked()) {
+            bill=(bill+20*num);
+            return "Order Details\n" + "Name : " + name.getText().toString() + "\nMobile Number : " + mobile_number.getText().toString() + "\nWhipped Cream is also added !!" + "\nChocolate is also added !!\n" + quantity + "\nTotal bill : Rs " + (bill) + "\nThank You !!";
+        }
+        else if ( chocolate.isChecked()) {
+            bill = (bill+10*num);
+            return "Order Details\n" + "Name : " + name.getText().toString() + "\nMobile Number : " + mobile_number.getText().toString() + "\nChocolate is also added !!\n" + quantity + "\nTotal bill : Rs " + (bill ) + "\nThank You !!";
+        }
+        else if (whippedcream.isChecked()) {
+            bill = (bill+10*num);
+            return "Order Details\n" + "Name : " + name.getText().toString() + "\nMobile Number : " + mobile_number.getText().toString() + "\nWhipped Cream is also added !!\n" + quantity + "\nTotal bill : Rs " + (bill ) + "\nThank You !!";
+        }
+        else {
+            bill = (bill);
+            return "Order Details\n" + "Name : " + name.getText().toString() + "\nMobile Number : " + mobile_number.getText().toString() + "\n" + quantity + "\nTotal bill : Rs " + bill + "\nThank You !!";
+        }
     }
 
     public void price(int n){
